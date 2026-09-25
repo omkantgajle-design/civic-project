@@ -140,3 +140,61 @@ def predict_priority(request: ComplaintRequest):
     return {
         "priority": priority
     }
+    # --------------------------------
+# Feature 11: AI Department Routing
+# --------------------------------
+@app.post("/route-department")
+def route_department(request: ComplaintRequest):
+
+    description = request.description.lower()
+
+    if any(word in description for word in [
+        "pothole",
+        "road",
+        "road damage",
+        "broken road",
+        "footpath",
+        "street"
+    ]):
+        department = "Road Department"
+
+    elif any(word in description for word in [
+        "garbage",
+        "waste",
+        "dustbin",
+        "trash",
+        "rubbish"
+    ]):
+        department = "Sanitation Department"
+
+    elif any(word in description for word in [
+        "water",
+        "pipeline",
+        "pipe",
+        "water leakage",
+        "water supply"
+    ]):
+        department = "Water Department"
+
+    elif any(word in description for word in [
+        "street light",
+        "lamp",
+        "electric pole",
+        "light not working"
+    ]):
+        department = "Electrical Department"
+
+    elif any(word in description for word in [
+        "drain",
+        "drainage",
+        "sewage",
+        "sewer"
+    ]):
+        department = "Drainage Department"
+
+    else:
+        department = "General Department"
+
+    return {
+        "department": department
+    }
